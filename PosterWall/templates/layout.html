@@ -1,0 +1,124 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>   
+        {% block title %}
+            Poster Wall
+        {% endblock title %}        
+    </title>
+    {% tailwind_css %}
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <nav class="bg-gray-800 p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+        
+        <!-- Logo -->
+        <div class="text-white text-2xl font-bold">
+            <a href="#">PosterWall</a>
+        </div>
+
+        <!-- Desktop Navigation Links -->
+        <div class="hidden md:flex space-x-6">
+            <a href="#" class="text-white hover:text-gray-400">Home</a>
+            <a href="#about" class="text-white hover:text-gray-400">About</a>
+            <a href="#services" class="text-white hover:text-gray-400">Services</a>
+            <a href="#contact" class="text-white hover:text-gray-400">Contact</a>
+        </div>
+
+        <!-- Authentication Buttons (Login/Register/Logout) -->
+        <div class="space-x-4">
+          <a href="#login" class="text-white hover:text-gray-400">Login</a>
+          <a href="#register" class="text-white hover:text-gray-400">Register</a>
+          <a href="#logout" class="text-white hover:text-gray-400">Logout</a>
+        </div>
+
+        <!-- Mobile Hamburger Icon -->
+        <div class="md:hidden">
+            <button id="hamburger" class="text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            </button>
+        </div>
+        </div>
+
+        <!-- Mobile Navigation Links (Hidden by default) -->
+        <div id="mobileMenu" class="md:hidden hidden bg-gray-800 p-4 space-y-4">
+        <a href="#" class="text-white hover:text-gray-400">Home</a>
+        <a href="#about" class="text-white hover:text-gray-400">About</a>
+        <a href="#services" class="text-white hover:text-gray-400">Services</a>
+        <a href="#contact" class="text-white hover:text-gray-400">Contact</a>
+        </div>
+    </nav>
+
+    <script>
+        // Toggle mobile menu visibility
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        hamburger.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        });
+    </script>
+
+    <div class="container mx-auto lg:max-w-[1064px] bg-gray-900">
+        {% block content %}   
+        {% endblock content %}
+    </div>
+       
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-6 md:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center md:items-start space-y-6 md:space-y-0">
+            
+            <!-- About / Description Section -->
+            <div class="text-center md:text-left">
+            <h3 class="text-xl font-semibold">PosterWall</h3>
+            <p class="text-gray-400 mt-2">A platform to share your thoughts with the world. Share, like, and interact with small posts like tweets.</p>
+            </div>
+            
+            <!-- Quick Links Section -->
+            <div class="flex flex-col items-center md:items-start space-y-2">
+            <h4 class="font-semibold">Quick Links</h4>
+            <a href="#" class="text-gray-400 hover:text-gray-200">Home</a>
+            <a href="#about" class="text-gray-400 hover:text-gray-200">About</a>
+            <a href="#contact" class="text-gray-400 hover:text-gray-200">Contact</a>
+            <a href="#terms" class="text-gray-400 hover:text-gray-200">Terms & Conditions</a>
+            <a href="#privacy" class="text-gray-400 hover:text-gray-200">Privacy Policy</a>
+            </div>
+
+            <!-- Social Media Links Section -->
+            <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-gray-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 2.828L11.172 11.656l-3.536-3.536L16.464 2 12 6.464 4.828 1.172a10 10 0 1113.656 13.656l-2.121-2.121a8 8 0 10-11.314-11.314z"></path>
+                </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-gray-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.028 6.87c.01.213.01.428.01.641 0 6.517-4.96 14.025-14.025 14.025-2.786 0-5.387-.814-7.595-2.207.392.046.796.07 1.201.07 2.406 0 4.616-.81 6.405-2.176-2.243-.042-4.144-1.523-4.8-3.567.318.061.646.092.979.092.467 0 .922-.066 1.366-.188-2.345-.468-4.116-2.47-4.116-4.896v-.061c.679.379 1.458.61 2.28.638-1.486-1.036-2.465-2.804-2.465-4.786 0-1.054.282-2.047.775-2.896 2.834 3.489 7.064 5.803 11.83 6.04-.097-.418-.146-.85-.146-1.285 0-3.118 2.522-5.64 5.64-5.64 1.635 0 3.112.689 4.147 1.801 1.296-2.006 2.367-4.568 2.367-7.177 0-.486-.05-.962-.146-1.424-1.498.872-3.153 1.46-4.905 1.73 1.775-1.067 3.143-2.744 3.779-4.74z"></path>
+                </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-gray-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22.5 0h-21A1.5 1.5 0 0 0 0 1.5v21A1.5 1.5 0 0 0 1.5 24h21a1.5 1.5 0 0 0 1.5-1.5v-21A1.5 1.5 0 0 0 22.5 0zM12 17.25c-1.875 0-3.75-.75-5.25-2.25S4.5 11.25 4.5 9s.75-3.75 2.25-5.25S10.125 1.5 12 1.5s3.75.75 5.25 2.25S19.5 7.5 19.5 9s-.75 3.75-2.25 5.25S13.875 17.25 12 17.25z"></path>
+                </svg>
+            </a>
+            </div>
+
+        </div>
+
+        <!-- Copyright Section -->
+        <div class="text-center mt-6 text-gray-400 text-sm">
+            <p>&copy; 2023 TweetBox. All rights reserved.</p>
+        </div>
+        </div>
+    </footer>
+
+</body>
+</html>
