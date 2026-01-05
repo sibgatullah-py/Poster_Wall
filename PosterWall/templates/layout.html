@@ -19,12 +19,12 @@
         
         <!-- Logo -->
         <div class="text-white text-2xl font-bold">
-            <a href="#">PosterWall</a>
+            <a href="{% url 'tweet_list' %}">PosterWall</a>
         </div>
 
         <!-- Desktop Navigation Links -->
         <div class="hidden md:flex space-x-6">
-            <a href="#" class="text-white hover:text-gray-400">Home</a>
+            <a href="{% url 'tweet_list' %}" class="text-white hover:text-gray-400">Home</a>
             <a href="#about" class="text-white hover:text-gray-400">About</a>
             <a href="#services" class="text-white hover:text-gray-400">Services</a>
             <a href="#contact" class="text-white hover:text-gray-400">Contact</a>

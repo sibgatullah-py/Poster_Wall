@@ -7,6 +7,11 @@
     
 
 {% block content %}
+
+<div class="py-8 flex justify-end gap-x-4 ">
+    <a href="{% url 'tweet_create' %}" class="p-2 bg-gray-900 text-white rounded-2xl  hover:text-gray-400">Create Post</a>
+    <a href="#" class="p-2 bg-gray-900 text-white rounded-2xl  hover:text-gray-400">View Your Post</a>
+</div>
 <div class="py-8">
     <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for tweet in tweets %}
@@ -28,9 +33,18 @@
                             {{ tweet.title }}
                         </h2>
 
-                        <p class="text-gray-600 text-sm leading-relaxed">
+                        <p class="text-gray-600 text-sm leading-relaxed pb-4">
                             {{ tweet.text }}
                         </p>
+
+                        <div class="flex gap-x-2">
+                            <a href="{% url 'tweet_edit' tweet.id %}" class="py-1.5 px-4 bg-blue-800 text-white rounded  hover:text-gray-400">
+                                Edit
+                            </a>
+                            <a href="{% url 'tweet_delete' tweet.id %}" class="py-1.5 px-4 bg-red-800 text-white rounded  hover:text-gray-400">
+                                Delete
+                            </a>
+                        </div>
                     </div>
                 </div>
             </li>

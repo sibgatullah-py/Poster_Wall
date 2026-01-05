@@ -26,7 +26,7 @@ def tweet_create(request):
     else:
         form = TweetForm()
         
-    return render(request, 'tweet_form.html', {'form':form})
+    return render(request, 'tweet/tweet_form.html', {'form':form})
 
 # Tweet/Post editing method    
 def tweet_edit(request, tweet_id):
@@ -38,10 +38,12 @@ def tweet_edit(request, tweet_id):
             tweet.user = request.user
             tweet.save()
             return redirect('tweet_list')
+        ''' redirect() does NOT take a template path.
+            It takes a URL name (the same one you use in {% url %}). '''
     else:
         form = TweetForm(instance=tweet)# instance is to show what is already in that field  
         
-    return render(request, 'tweet_form.html', {'form':form})
+    return render(request, 'tweet/tweet_form.html', {'form':form})
 
 # Tweet/Post deleting method
 def tweet_delete(request, tweet_id):
@@ -50,4 +52,4 @@ def tweet_delete(request, tweet_id):
         tweet.delete()
         return redirect('tweet_list')
     
-    return render(request, 'tweet_confirm_delete.html', {'tweet':tweet})
+    return render(request, 'tweet/tweet_confirm_delete.html', {'tweet':tweet})
