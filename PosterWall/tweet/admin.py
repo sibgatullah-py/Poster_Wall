@@ -3,7 +3,7 @@ from .models import Tweet
 # Register your models here.
 
 class TweetAdmin(admin.ModelAdmin):
-    list_display = ('user', 'text', 'photo')
+    list_display = ('user','title', 'photo')
 
 
 admin.site.register(Tweet, TweetAdmin)
