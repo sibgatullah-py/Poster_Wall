@@ -22,7 +22,7 @@ def tweet_create(request):
             tweet=form.save(commit=False)# saving the tweet temporarily 
             tweet.user = request.user # when a request comes from a form we get the user from the request not the form
             tweet.save()# permanently saving the tweet in the database 
-            return redirect('tweet_list')
+            return redirect('tweet_list') # returning back after handling the form 
     else:
         form = TweetForm()
         
@@ -42,3 +42,12 @@ def tweet_edit(request, tweet_id):
         form = TweetForm(instance=tweet)# instance is to show what is already in that field  
         
     return render(request, 'tweet_form.html', {'form':form})
+
+# Tweet/Post deleting method
+def tweet_delete(request, tweet_id):
+    tweet = get_object_or_404(Tweet, pk=tweet_id, user=request.user)
+    if request.method=="POST":
+        tweet.delete()
+        return redirect('tweet_list')
+    
+    return render(request, 'tweet_confirm_delete.html', {'tweet':tweet})
