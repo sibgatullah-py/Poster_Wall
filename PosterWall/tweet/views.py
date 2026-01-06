@@ -14,6 +14,12 @@ def tweet_list(request):
     tweets = Tweet.objects.all().order_by('-created_at')
     return render(request, 'tweet/index.html', {'tweets':tweets})
 
+@login_required
+def my_tweets(request):
+    tweets = Tweet.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'tweet/my_tweets.html', {'tweets':tweets})
+
+
 # Tweet/Post creation method
 @login_required
 def tweet_create(request):

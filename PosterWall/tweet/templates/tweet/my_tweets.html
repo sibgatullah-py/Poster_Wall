@@ -2,15 +2,14 @@
 
 
 {% block title %}
-    Tweets
+    {}
 {% endblock title %}
-    
 
 {% block content %}
 
 <div class="py-8 flex justify-end gap-x-4 ">
     <a href="{% url 'tweet_create' %}" class="p-2 bg-gray-900 text-white rounded-2xl  hover:text-gray-400">Create Post</a>
-    <a href="{% url 'my_tweets' %}" class="p-2 bg-gray-900 text-white rounded-2xl  hover:text-gray-400">View Your Post</a>
+    <a href="#" class="p-2 bg-gray-900 text-white rounded-2xl  hover:text-gray-400">View Your Post</a>
 </div>
 <div class="py-8">
     <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -53,6 +52,4 @@
         {% endfor %}
     </ul>
 </div>
-
 {% endblock content %}
-    
