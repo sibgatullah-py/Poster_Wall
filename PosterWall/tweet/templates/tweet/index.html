@@ -37,14 +37,16 @@
                             {{ tweet.text }}
                         </p>
 
-                        <div class="flex gap-x-2">
-                            <a href="{% url 'tweet_edit' tweet.id %}" class="py-1.5 px-4 bg-blue-800 text-white rounded  hover:text-gray-400">
-                                Edit
-                            </a>
-                            <a href="{% url 'tweet_delete' tweet.id %}" class="py-1.5 px-4 bg-red-800 text-white rounded  hover:text-gray-400">
-                                Delete
-                            </a>
-                        </div>
+                        {% if tweet.user == user %}
+                            <div class="flex gap-x-2">
+                                <a href="{% url 'tweet_edit' tweet.id %}" class="py-1.5 px-4 bg-blue-800 text-white rounded  hover:text-gray-400">
+                                    Edit
+                                </a>
+                                <a href="{% url 'tweet_delete' tweet.id %}" class="py-1.5 px-4 bg-red-800 text-white rounded  hover:text-gray-400">
+                                    Delete
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </li>

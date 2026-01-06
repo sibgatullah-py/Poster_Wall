@@ -128,6 +128,12 @@ USE_TZ = True
 STATIC_URL = 'static/' # for raw css and js
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+
 MEDIA_URL = '/media/' # for images and other media files 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Generally django will go to this url. So I created the redirect url so user will go to tweet when he is logged in 
+LOGIN_URL = '/accounts/login'
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = '/'

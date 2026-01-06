@@ -1,5 +1,15 @@
 from django import forms
 from .models import Tweet
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+
+TAILWIND_INPUT_CLASSES = (
+    "w-full px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700"
+    "focus:outline-none focus:ring-1 focus:ring-blue-500 "
+    "focus:border-blue-500"
+)
+
 
 class TweetForm(forms.ModelForm):
     class Meta: # This is a django standerd practice to use the meta class after a form class .
@@ -22,4 +32,41 @@ class TweetForm(forms.ModelForm):
                          'file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100'
             }),
         }
+
+
+class UserRegistrationForm(UserCreationForm):
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            "class": TAILWIND_INPUT_CLASSES,
+            "placeholder": "Enter your email"
+        })
+    )
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
+        widgets = {
+            "username": forms.TextInput(attrs={
+                "class": TAILWIND_INPUT_CLASSES,
+                "placeholder": "Choose a username"
+            }),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["password1"].widget = forms.PasswordInput(attrs={
+            "class": TAILWIND_INPUT_CLASSES,
+            "placeholder": "Enter password"
+        })
+
+        self.fields["password2"].widget = forms.PasswordInput(attrs={
+            "class": TAILWIND_INPUT_CLASSES,
+            "placeholder": "Confirm password"
+        })
         
+    # ✅ HIDE PASSWORD HELP TEXTS
+        self.fields["username"].help_text = None
+        self.fields["email"].help_text = None
+        self.fields["password1"].help_text = None
+        self.fields["password2"].help_text = None
