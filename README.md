@@ -22,7 +22,7 @@ Poster_Wall is a Django web application for posting, viewing, and managing tweet
 
 1. **Clone the repository:**
 	```bash
-	git clone < https://github.com/sibgatullah-py/Poster_Wall.git >
+	git clone https://github.com/sibgatullah-py/Poster_Wall.git
 	cd Poster_Wall
 	```
 
