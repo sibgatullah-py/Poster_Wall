@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 
 class Tweet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.TextField(max_length=100, null=True)
-    text = models.TextField(max_length=500)
+    title = models.CharField(max_length=100, null=True)
+    text = models.TextField()
     photo = models.ImageField(upload_to='photos/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)# this will kick in when the post will be added
     updated_at = models.DateTimeField(auto_now=True)# this will kick in when the post gets updated 
