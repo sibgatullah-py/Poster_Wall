@@ -1,58 +1,121 @@
 {% extends 'layout.html' %}
-
-
-{% block title %}
-    Tweets
-{% endblock title %}
-    
+{% block title %}Tweets{% endblock title %}
 
 {% block content %}
 
-<div class="py-8 flex justify-end gap-x-4 ">
-    <a href="{% url 'tweet_create' %}" class="p-2 bg-gray-900 text-white rounded-2xl  hover:text-gray-400">Create Post</a>
-    <a href="{% url 'my_tweets' %}" class="p-2 bg-gray-900 text-white rounded-2xl  hover:text-gray-400">View Your Post</a>
-</div>
-<div class="py-8">
-    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="max-w-xl mx-auto px-3">
+
+    <!-- Top actions -->
+    <div class="py-4 flex justify-end gap-x-3">
+        <a href="{% url 'tweet_create' %}" 
+           class="px-4 py-1.5 bg-blue-600 text-white rounded-full text-sm hover:bg-blue-700 shadow">
+            + Create
+        </a>
+        <a href="{% url 'my_tweets' %}" 
+           class="px-4 py-1.5 bg-gray-100 text-gray-800 rounded-full text-sm hover:bg-gray-200 shadow">
+            My Posts
+        </a>
+    </div>
+
+    <!-- Feed -->
+    <div class="space-y-4">
+
         {% for tweet in tweets %}
-            <li class="flex justify-center">
-                <div class="max-w-md w-full bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+        <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition relative">
 
-                    <!-- Image -->
-                    {% if tweet.photo %}
-                        <img
-                            src="{{ tweet.photo.url }}"
-                            alt="{{ tweet.title }}"
-                            class="w-full h-48 object-cover"
-                        />
-                    {% endif %}
+            <!-- Header -->
+            <div class="flex items-center justify-between gap-2.5 px-3 py-2 border-b">
 
-                    <!-- Content -->
-                    <div class="p-4">
-                        <h2 class="text-lg font-semibold text-gray-900 mb-2">
-                            {{ tweet.title }}
-                        </h2>
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center 
+                                font-semibold text-white text-sm">
+                        {{ tweet.user.username|first|upper }}
+                    </div>
 
-                        <p class="text-gray-600 text-sm leading-relaxed pb-4">
-                            {{ tweet.text }}
+                    <div class="leading-tight">
+                        <p class="font-semibold text-gray-900 text-sm">
+                            {{ tweet.user.username }}
                         </p>
-
-                        {% if tweet.user == user %}
-                            <div class="flex gap-x-2">
-                                <a href="{% url 'tweet_edit' tweet.id %}" class="py-1.5 px-4 bg-blue-800 text-white rounded  hover:text-gray-400">
-                                    Edit
-                                </a>
-                                <a href="{% url 'tweet_delete' tweet.id %}" class="py-1.5 px-4 bg-red-800 text-white rounded  hover:text-gray-400">
-                                    Delete
-                                </a>
-                            </div>
-                        {% endif %}
+                        <p class="text-[11px] text-gray-500">
+                            {{ tweet.created_at|timesince }} ago
+                        </p>
                     </div>
                 </div>
-            </li>
+
+                <!-- menu for edit/delete -->
+                {% if tweet.user == user %}
+                <div class="relative">
+                    <button class="text-gray-500 hover:text-gray-700" onclick="toggleMenu('menu-{{ tweet.id }}')">
+                        ⋮
+                    </button>
+                    <div id="menu-{{ tweet.id }}" 
+                         class="hidden absolute right-0 mt-1 w-28 bg-white border rounded-md shadow-lg text-sm z-50">
+                        <a href="{% url 'tweet_edit' tweet.id %}" 
+                           class="block px-3 py-2 hover:bg-blue-50 text-blue-600">
+                           Edit
+                        </a>
+                        <a href="{% url 'tweet_delete' tweet.id %}" 
+                           class="block px-3 py-2 hover:bg-red-50 text-red-600">
+                           Delete
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Text -->
+            <div class="px-3 py-2">
+                <h2 class="font-semibold text-blue-700 text-sm mb-1">
+                    {{ tweet.title }}
+                </h2>
+                <p class="text-gray-700 text-sm leading-relaxed">
+                    {{ tweet.text }}
+                </p>
+            </div>
+
+            <!-- Image -->
+            {% if tweet.photo %}
+            <img src="{{ tweet.photo.url }}" 
+                 class="w-full max-h-80 object-cover">
+            {% endif %}
+
+            <!-- Actions -->
+            <div class="px-3 py-2 border-t flex justify-between items-center text-xs text-gray-600">
+
+                <div class="flex gap-4">
+                    <span class="hover:text-blue-600 cursor-pointer"> Like</span>
+                    <span class="hover:text-blue-600 cursor-pointer">💬 Comment</span>
+                    <span class="hover:text-blue-600 cursor-pointer"> Share</span>
+                </div>
+            </div>
+
+        </div>
         {% endfor %}
-    </ul>
+
+    </div>
+
 </div>
 
+<!-- Toggle menu  -->
+<script>
+function toggleMenu(id) {
+    const menu = document.getElementById(id);
+    if(menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+    } else {
+        menu.classList.add('hidden');
+    }
+}
+
+// Close all menus when clicking outside
+document.addEventListener('click', function(e) {
+    const menus = document.querySelectorAll('[id^="menu-"]');
+    menus.forEach(menu => {
+        if(!menu.contains(e.target) && !menu.previousElementSibling.contains(e.target)) {
+            menu.classList.add('hidden');
+        }
+    });
+});
+</script>
+
 {% endblock content %}
-    

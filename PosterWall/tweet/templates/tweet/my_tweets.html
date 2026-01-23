@@ -1,55 +1,85 @@
 {% extends 'layout.html' %}
 
-
-{% block title %}
-    {}
-{% endblock title %}
+{% block title %}Tweets{% endblock title %}
 
 {% block content %}
 
-<div class="py-8 flex justify-end gap-x-4 ">
-    <a href="{% url 'tweet_create' %}" class="p-2 bg-gray-900 text-white rounded-2xl  hover:text-gray-400">Create Post</a>
-    <a href="#" class="p-2 bg-gray-900 text-white rounded-2xl  hover:text-gray-400">View Your Post</a>
-</div>
-<div class="py-8">
-    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {% for tweet in tweets %}
+<div class="max-w-7xl mx-auto px-4">
+
+    <!-- Top buttons -->
+    <div class="py-5 flex justify-end gap-x-3">
+        <a href="{% url 'tweet_create' %}" 
+           class="px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-medium 
+                  hover:bg-blue-700 shadow-sm transition">
+            + Create Post
+        </a>
+        <a href="#" 
+           class="px-4 py-2 bg-gray-100 text-gray-800 rounded-full text-sm font-medium 
+                  hover:bg-gray-200 shadow-sm transition">
+            My Posts
+        </a>
+    </div>
+
+    <!-- Grid -->
+    <div class="py-4">
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+            {% for tweet in tweets %}
             <li class="flex justify-center">
-                <div class="max-w-md w-full bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div class="w-full bg-white rounded-2xl shadow-sm 
+                            hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden">
 
                     <!-- Image -->
                     {% if tweet.photo %}
-                        <img
-                            src="{{ tweet.photo.url }}"
-                            alt="{{ tweet.title }}"
-                            class="w-full h-48 object-cover"
-                        />
+                    <div class="overflow-hidden">
+                        <img src="{{ tweet.photo.url }}"
+                             alt="{{ tweet.title }}"
+                             class="w-full h-44 object-cover hover:scale-105 transition duration-500"/>
+                    </div>
                     {% endif %}
 
                     <!-- Content -->
                     <div class="p-4">
-                        <h2 class="text-lg font-semibold text-gray-900 mb-2">
+
+                        <!-- Title -->
+                        <h2 class="text-base font-semibold text-blue-700 mb-1 line-clamp-1">
                             {{ tweet.title }}
                         </h2>
 
-                        <p class="text-gray-600 text-sm leading-relaxed pb-4">
+                        <!-- Text -->
+                        <p class="text-gray-600 text-sm leading-relaxed mb-3 line-clamp-3">
                             {{ tweet.text }}
                         </p>
 
-                        {% if tweet.user == user %}
-                            <div class="flex gap-x-2">
-                                <a href="{% url 'tweet_edit' tweet.id %}" class="py-1.5 px-4 bg-blue-800 text-white rounded  hover:text-gray-400">
+                        <!-- Actions -->
+                        <div class="flex justify-between items-center">
+
+                            <span class="text-xs text-gray-400">
+                                {{ tweet.user.username }}
+                            </span>
+
+                            {% if tweet.user == user %}
+                            <div class="flex gap-2">
+                                <a href="{% url 'tweet_edit' tweet.id %}" 
+                                   class="px-3 py-1.5 bg-blue-600 text-white text-xs rounded-lg hover:bg-blue-700">
                                     Edit
                                 </a>
-                                <a href="{% url 'tweet_delete' tweet.id %}" class="py-1.5 px-4 bg-red-800 text-white rounded  hover:text-gray-400">
+                                <a href="{% url 'tweet_delete' tweet.id %}" 
+                                   class="px-3 py-1.5 bg-red-500 text-white text-xs rounded-lg hover:bg-red-600">
                                     Delete
                                 </a>
                             </div>
-                        {% endif %}
+                            {% endif %}
+
+                        </div>
                     </div>
                 </div>
             </li>
-        {% endfor %}
-    </ul>
+            {% endfor %}
+
+        </ul>
+    </div>
+
 </div>
+
 {% endblock content %}
