@@ -68,10 +68,46 @@
                 <h2 class="font-semibold text-blue-700 text-sm mb-1">
                     {{ tweet.title }}
                 </h2>
-                <p class="text-gray-700 text-sm leading-relaxed">
-                    {{ tweet.text }}
-                </p>
+
+                <!-- Container for text -->
+                <div class="relative">
+                    <!-- Shortened text container -->
+                    <p class="text-gray-700 text-sm leading-relaxed" id="short-{{ tweet.id }}">
+                        {% if tweet.text|length > 200 %}
+                            {{ tweet.text|slice:":200" }}...
+                        {% else %}
+                            {{ tweet.text }}
+                        {% endif %}
+                    </p>
+
+                    <!-- Full text container, hidden by default -->
+                    <p class="text-gray-700 text-sm leading-relaxed hidden" id="full-{{ tweet.id }}">
+                        {{ tweet.text }}
+                    </p>
+
+                    {% if tweet.text|length > 200 %}
+                    <button 
+                        class="text-blue-600 text-xs mt-1 hover:underline" 
+                        onclick="
+                            const shortEl = document.getElementById('short-{{ tweet.id }}');
+                            const fullEl = document.getElementById('full-{{ tweet.id }}');
+                            const btn = this;
+                            if(fullEl.classList.contains('hidden')){
+                                shortEl.classList.add('hidden');
+                                fullEl.classList.remove('hidden');
+                                btn.textContent = 'See less';
+                            } else {
+                                shortEl.classList.remove('hidden');
+                                fullEl.classList.add('hidden');
+                                btn.textContent = 'See more';
+                            }
+                        ">
+                        See more
+                    </button>
+                    {% endif %}
+                </div>
             </div>
+
 
             <!-- Image -->
             {% if tweet.photo %}
@@ -84,7 +120,7 @@
 
                 <div class="flex gap-4">
                     <span class="hover:text-blue-600 cursor-pointer"> Like</span>
-                    <span class="hover:text-blue-600 cursor-pointer">💬 Comment</span>
+                    <span class="hover:text-blue-600 cursor-pointer"> Comment</span>
                     <span class="hover:text-blue-600 cursor-pointer"> Share</span>
                 </div>
             </div>
