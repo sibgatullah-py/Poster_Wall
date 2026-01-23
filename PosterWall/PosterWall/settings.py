@@ -49,6 +49,12 @@ TAILWIND_APP_NAME = 'theme'
 NMP_BIN_PATH = '/home/sibgatullah/.nvm/versions/node/v22.20.0/bin/npm'
 
 
+# Custome user model 
+AUTH_USER_MODEL = 'tweet.CustomUser'
+
+
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -1,8 +1,14 @@
 from django import forms
 from .models import Tweet
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 
+from django.conf import settings
+from django.contrib.auth import get_user_model
+
+
+
+User = get_user_model()
 
 TAILWIND_INPUT_CLASSES = (
     "w-full px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700"
