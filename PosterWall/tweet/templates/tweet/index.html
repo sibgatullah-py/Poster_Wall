@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<div class="max-w-xl mx-auto px-3">
+<div class="max-w-xl mx-auto px-3 pb-8">
 
     <!-- Top actions -->
     <div class="py-4 flex justify-end gap-x-3">
@@ -27,9 +27,12 @@
             <div class="flex items-center justify-between gap-2.5 px-3 py-2 border-b">
 
                 <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center 
-                                font-semibold text-white text-sm">
-                        {{ tweet.user.username|first|upper }}
+                    <div class="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center font-semibold text-white text-sm overflow-hidden">
+                        {% if tweet.user.image %}
+                            <img src="{{ tweet.user.image.url }}" alt="{{ tweet.user.username }}" class="w-full h-full object-cover">
+                        {% else %}
+                            {{ tweet.user.username|first|upper }}
+                        {% endif %}
                     </div>
 
                     <div class="leading-tight">

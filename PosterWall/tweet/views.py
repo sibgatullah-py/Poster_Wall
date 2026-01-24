@@ -3,6 +3,14 @@ from .models import Tweet
 from .forms import TweetForm, UserRegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
+
+from django.views.generic import TemplateView # this module is to render a template using a class based view
+
+# class based views 
+class AboutView(TemplateView): # here the AboutView actually inherited functionality form the TemplateView class 
+    template_name = 'about.html'
+
+
 # Create your views here.
 
 # def index(request):
@@ -63,6 +71,7 @@ def tweet_delete(request, tweet_id):
     
     return render(request, 'tweet/tweet_confirm_delete.html', {'tweet':tweet})
 
+# Registering new users
 def register(request):
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)

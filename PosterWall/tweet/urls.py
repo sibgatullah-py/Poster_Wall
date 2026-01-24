@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from .views import AboutView
+
 
 urlpatterns = [
     path('', views.tweet_list, name='tweet_list'),
@@ -9,6 +11,15 @@ urlpatterns = [
     path('delete/<int:tweet_id>/', views.tweet_delete, name='tweet_delete'),
     path('register/', views.register, name='register'),
     path('login/', views.login, name='login'),
-    path('profile/', views.profile, name='profile')
+    path('profile/', views.profile, name='profile'),
+    
+    
+    path('about/', AboutView.as_view(), name='about'),# this url is for class based views
 
 ]
+
+'''
+Login, Logout, Password_change, Password_reset 
+These methods all comes from the project level url 
+path('accounts/', include('django.contrib.auth.urls')),
+'''

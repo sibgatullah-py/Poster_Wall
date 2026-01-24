@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="min-h-[80vh] flex items-center justify-center px-4 my-6">
+
+  <div class="max-w-2xl bg-white shadow-xl rounded-2xl p-8">
+
+    <h1 class="text-4xl font-bold text-blue-600 mb-4 text-center">
+      About PosterWall
+    </h1>
+
+    <p class="text-gray-600 text-center mb-6">
+      PosterWall is a simple social posting platform built with Django.
+    </p>
+
+    <div class="space-y-4 text-gray-700 leading-relaxed">
+
+      <p>
+        This project allows users to create accounts, post tweets, upload images,
+        manage their profiles, and interact with their own content in a clean and
+        minimal interface.
+      </p>
+
+      <p>
+        It was built to practice real-world backend concepts like authentication,
+        media handling, CRUD operations, and Django’s ORM.
+      </p>
+
+      <p>
+        The goal of PosterWall is to demonstrate how a modern Django application
+        is structured using industry best practices.
+      </p>
+
+    </div>
+
+    <div class="mt-8 text-center">
+      <span class="inline-block bg-blue-100 text-blue-600 px-4 py-2 rounded-xl text-sm font-semibold">
+        Built with Django 💙
+      </span>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
