@@ -77,3 +77,18 @@ def register(request):
     
     
     return render(request, 'registration/register.html', {'form':form})
+
+@login_required
+def profile(request):
+    info = request.user
+    
+    if request.method == "POST":
+        info.username = request.POST.get('username')
+        
+        if 'image' in request.FILES:
+            info.image = request.FILES['image']
+        
+        info.save()
+        return redirect('profile')
+    
+    return render(request,'tweet/profile.html',{'info':info})
