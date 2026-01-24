@@ -80,15 +80,15 @@ def register(request):
 
 @login_required
 def profile(request):
-    info = request.user
+    user = request.user
     
-    if request.method == "POST":
-        info.username = request.POST.get('username')
+    if request.method == "POST":# this line checks if the username change request in the form is post and updates username
+        user.username = request.POST.get('username') 
         
-        if 'image' in request.FILES:
-            info.image = request.FILES['image']
+        if 'image' in request.FILES:# this line updates profile picture 
+            user.image = request.FILES['image']
         
-        info.save()
-        return redirect('profile')
+        user.save()
+        return redirect('profile') # refresh page
     
-    return render(request,'tweet/profile.html',{'info':info})
+    return render(request,'tweet/profile.html',{'user':user})
