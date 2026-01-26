@@ -12,7 +12,10 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.login, name='login'),
     path('profile/', views.profile, name='profile'),
+    
     path('tweet/<int:tweet_id>/comment/', views.add_comment, name='add_comment'),
+    path('tweet/<int:tweet_id>/', views.tweet_detail, name='tweet_detail'), # for sharing a post
+
     
     
     path('about/', AboutView.as_view(), name='about'),# this url is for class based views

@@ -113,21 +113,38 @@
 
 
             <!-- Image -->
-            {% if tweet.photo %}
-            <img src="{{ tweet.photo.url }}" 
-                 class="w-full max-h-80 object-cover">
-            {% endif %}
+            <a href="">
+                {% if tweet.photo %}
+                <img src="{{ tweet.photo.url }}" 
+                    class="w-full max-h-80 object-cover">
+                {% endif %}
+            </a>
 
-            <!-- Actions -->
+           <!-- Actions -->
             <div class="px-3 py-2 border-t flex justify-between items-center text-xs text-gray-600">
                 <div class="flex gap-4">
-                    <span class="hover:text-blue-600 cursor-pointer"> Like</span>
-                    <span class="hover:text-blue-600 cursor-pointer" onclick="toggleComments({{ tweet.id }})">
+
+                    {% comment %} <span class="hover:text-blue-600 cursor-pointer">
+                        Like
+                    </span> {% endcomment %}
+
+                    <span
+                        class="hover:text-blue-600 cursor-pointer"
+                        onclick="toggleComments({{ tweet.id }})"
+                    >
                         Comment
                     </span>
-                    <span class="hover:text-blue-600 cursor-pointer"> Share</span>
+
+                    <span
+                        class="hover:text-blue-600 cursor-pointer"
+                        onclick="sharePost('{{ request.scheme }}://{{ request.get_host }}{% url 'tweet_detail' tweet.id %}#tweet-{{ tweet.id }}')"
+                    >
+                        Share
+                    </span>
+
                 </div>
             </div>
+
 
             <!-- Comments Section -->
             <div id="comments-{{ tweet.id }}" class="px-3 py-2 border-t bg-gray-50 space-y-3 hidden rounded-b-4xl">
@@ -215,9 +232,17 @@ document.addEventListener('click', function(e) {
     });
 });
 
+// toggle button for hiding comment section
 function toggleComments(tweetId) {
     const el = document.getElementById(`comments-${tweetId}`);
     el.classList.toggle('hidden');
+}
+
+// copying url for sharing a post
+function sharePost(url) {
+    navigator.clipboard.writeText(url)
+        .then(() => alert('Post link copied!'))
+        .catch(() => alert('Failed to copy link'));
 }
 
 </script>

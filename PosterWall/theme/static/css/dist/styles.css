@@ -57,7 +57,6 @@
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
-    --font-weight-black: 900;
     --tracking-normal: 0em;
     --leading-tight: 1.25;
     --leading-normal: 1.5;
@@ -389,6 +388,9 @@
   }
   .max-h-80 {
     max-height: calc(var(--spacing) * 80);
+  }
+  .max-h-96 {
+    max-height: calc(var(--spacing) * 96);
   }
   .min-h-\[70vh\] {
     min-height: 70vh;

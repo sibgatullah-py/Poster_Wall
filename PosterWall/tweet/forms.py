@@ -88,3 +88,4 @@ class CommentForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['text'].help_text = None
 
+

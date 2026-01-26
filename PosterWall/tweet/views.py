@@ -30,7 +30,16 @@ def tweet_list(request):
 @login_required
 def my_tweets(request):
     tweets = Tweet.objects.filter(user=request.user).order_by('-created_at')
-    return render(request, 'tweet/my_tweets.html', {'tweets':tweets})
+
+    # Create a separate form for each tweet
+    comment_forms = {tweet.id: CommentForm(prefix=str(tweet.id)) for tweet in tweets}
+
+    return render(request, 'tweet/my_tweets.html', {
+        'tweets': tweets,
+        'comment_forms': comment_forms
+    })
+
+
 
 
 # Tweet/Post creation method
@@ -111,7 +120,6 @@ def profile(request):
 @login_required
 def add_comment(request, tweet_id):
     tweet = get_object_or_404(Tweet, id=tweet_id)
-    
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -119,7 +127,15 @@ def add_comment(request, tweet_id):
             comment.user = request.user
             comment.tweet = tweet
             comment.save()
-            
     return redirect('tweet_list')
 
-    
+
+# method for sending a tweet detail and share using it's url
+def tweet_detail(request, tweet_id):
+    tweet = get_object_or_404(Tweet, id=tweet_id)
+    comment_form = CommentForm()
+    return render(request, 'tweet/tweet_detail.html', {
+        'tweet': tweet,
+        'comment_form': comment_form
+    })
+   
