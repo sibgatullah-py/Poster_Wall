@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect, get_object_or_404 # Django uses an ORM layer through which we can interact with the database
 from .models import Tweet
-from .forms import TweetForm, UserRegistrationForm
+from .forms import TweetForm, UserRegistrationForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 
@@ -20,7 +20,12 @@ class AboutView(TemplateView): # here the AboutView actually inherited functiona
 # Method for rendering all the tweets at once in the front page 
 def tweet_list(request):
     tweets = Tweet.objects.all().order_by('-created_at')
-    return render(request, 'tweet/index.html', {'tweets':tweets})
+    comment_form = CommentForm()
+
+    return render(request, 'tweet/index.html', {
+        'tweets': tweets,
+        'comment_form': comment_form
+    })
 
 @login_required
 def my_tweets(request):
@@ -101,3 +106,20 @@ def profile(request):
         return redirect('profile') # refresh page
     
     return render(request,'tweet/profile.html',{'user':user})
+
+# method for commenting on a post. This method only does one thing (saving a comment)
+@login_required
+def add_comment(request, tweet_id):
+    tweet = get_object_or_404(Tweet, id=tweet_id)
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.tweet = tweet
+            comment.save()
+            
+    return redirect('tweet_list')
+
+    
